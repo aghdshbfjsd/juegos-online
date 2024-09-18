@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos Divertidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            color: red;
+        }
+        .game-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid red;
+            border-radius: 10px;
+            width: 300px;
+            background-color: white;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Juegos Simples y Divertidos</h1>
+
+    <!-- Juego Piedra, Papel o Tijeras -->
+    <div class="game-container">
+        <h2>Piedra, Papel o Tijeras</h2>
+        <button onclick="playGame('piedra')">Piedra</button>
+        <button onclick="playGame('papel')">Papel</button>
+        <button onclick="playGame('tijeras')">Tijeras</button>
+        <p id="result"></p>
+    </div>
+
+    <!-- Juego Adivina el Número -->
+    <div class="game-container">
+        <h2>Adivina el Número (1-10)</h2>
+        <input type="number" id="userGuess" min="1" max="10" placeholder="Tu número" />
+        <button onclick="guessNumber()">Adivinar</button>
+        <p id="numberResult"></p>
+    </div>
+
+    <script>
+        // Piedra, Papel o Tijeras
+        function playGame(userChoice) {
+            const choices = ['piedra', 'papel', 'tijeras'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let result = '';
+
+            if (userChoice === computerChoice) {
+                result = 'Empate!';
+            } else if (
+                (userChoice === 'piedra' && computerChoice === 'tijeras') ||
+                (userChoice === 'papel' && computerChoice === 'piedra') ||
+                (userChoice === 'tijeras' && computerChoice === 'papel')
+            ) {
+                result = '¡Ganaste! Computadora eligió ' + computerChoice;
+            } else {
+                result = 'Perdiste... Computadora eligió ' + computerChoice;
+            }
+
+            document.getElementById('result').textContent = result;
+        }
+
+        // Adivina el número
+        let randomNumber = Math.floor(Math.random() * 10) + 1;
+
+        function guessNumber() {
+            const userGuess = parseInt(document.getElementById('userGuess').value);
+            let result = '';
+
+            if (userGuess === randomNumber) {
+                result = '¡Correcto! El número era ' + randomNumber;
+                randomNumber = Math.floor(Math.random() * 10) + 1; // Reiniciar número
+            } else if (userGuess < randomNumber) {
+                result = 'Demasiado bajo. Intenta de nuevo.';
+            } else {
+                result = 'Demasiado alto. Intenta de nuevo.';
+            }
+
+            document.getElementById('numberResult').textContent = result;
+        }
+    </script>
+
+</body>
+</html>
